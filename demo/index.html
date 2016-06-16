@@ -18,7 +18,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <script src="../../webcomponentsjs/webcomponents-lite.js"></script>
     <link rel="import" href="../../paper-styles/demo-pages.html">
-    <link rel="import" href="../iron-signals.html">
+    <link rel="import" href="../things-event-manager.html">
   </head>
 <body>
 
@@ -26,25 +26,28 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
 
     <h1>&lt;iron-signal&gt;</h1>
     <template is="dom-bind" id="my-app">
-      <iron-signals on-iron-signal-foo="fooSignal"></iron-signals>
+      <things-event-manager 
+        events = '[{"name": "success","function":"foo"}]'>
+      </things-event-manager>
     </template>
 
-    <template is="dom-bind" id="signal-message">
+    <template is="dom-bind" id="event-message">
       <template is="dom-if" if="{{detail}}">
-        <div><code>my-app</code> got a <code>{{detail}}</code> signal</div>
+        <div><code>my-app</code> got a <code>{{detail}}</code> event massage</div>
       </template>
     </template>
 
   </div>
 
   <script>
-
+    var app =  document.querySelector("#my-app");
+    
     document.addEventListener("WebComponentsReady", function() {
       document.querySelector('#my-app').fire('iron-signal', {name: "foo", data: "Foo!"});
     });
 
-    document.querySelector("#my-app").fooSignal = function(e, detail, sender) {
-      document.querySelector("#signal-message").detail = detail;
+    app.foo = function(e) {
+      document.querySelector("#event-message").detail = e.detail;
     };
   </script>
 
