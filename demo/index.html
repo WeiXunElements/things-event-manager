@@ -27,7 +27,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
     <h1>&lt;iron-signal&gt;</h1>
     <template is="dom-bind" id="my-app">
       <things-event-manager 
-        events = '[{"name": "success","function":"foo"}]'>
+        events = '[{"name": "foo","function":"showFoo"}]'>
       </things-event-manager>
     </template>
 
@@ -46,7 +46,7 @@ subject to an additional IP rights grant found at http://polymer.github.io/PATEN
       document.querySelector('#my-app').fire('iron-signal', {name: "foo", data: "Foo!"});
     });
 
-    app.foo = function(e) {
+    app.showFoo = function(e) {
       document.querySelector("#event-message").detail = e.detail;
     };
   </script>
