@@ -30,7 +30,7 @@ Example:
 					}
 				},
 				eventsChanged: function() {
-					if(events && events.length>0){
+					if(this.events && this.events.length>0){
 						this.events.forEach(function(event, index) {
 							this.$.signal.addEventListener('iron-signal-'+event.name, app[event.function].bind(app));
 						}.bind(this));
