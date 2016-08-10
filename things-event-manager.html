@@ -30,11 +30,10 @@ Example:
 					}
 				},
 				attached: function(){
-					this.eventsChanged();
+					// this.eventsChanged();
 				},
 				eventsChanged: function() {
 					var app = document.getElementById('app');
-
 					if(app){
 						if(this.events && this.events.length>0){
 							this.events.forEach(function(event, index) {
