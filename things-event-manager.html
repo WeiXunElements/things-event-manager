@@ -1,13 +1,16 @@
 <link ref="import" href="../../bower_components/polymer/polymer.html">
+
 <link rel="import" href="../../bower_components/iron-signals/iron-signals.html">
+
 <!--
 모든 글로벌 이벤트를 한곳에서 관리하고 app에서 관리하기 위한 컴포넌트
 
 Example:
 
     <things-event-manager 
+    	app-id = "app"
       events = '[{"name": "success","function":"showToastInfo"},
-                {"name": "failure","function" : "showToastConfim"}]'>
+                {"name": "failure","function" : "showToastConfirm"}]'>
     </things-event-manager>
 
 @demo demo/index.html
@@ -17,32 +20,43 @@ Example:
 	<template>
 		<iron-signals id='signal'></iron-signals>
 	</template>
-	<script>
-		(function() {
-			'use strict';
 
-			Polymer({
-				is: 'things-event-manager',
-				properties:{
-					events:{
-						type: Array,
-						observer:'eventsChanged'
-					}
+	<script>
+		'use strict';
+
+		Polymer({
+			is: 'things-event-manager',
+
+			properties: {
+				/**
+				 * Application
+				 */
+				appId: {
+					type: Object,
+					value: 'app'
 				},
-				attached: function(){
-					// this.eventsChanged();
-				},
-				eventsChanged: function() {
-					var app = document.getElementById('app');
-					if(app){
-						if(this.events && this.events.length>0){
-							this.events.forEach(function(event, index) {
-								this.$.signal.addEventListener('iron-signal-'+event.name, app[event.function].bind(app));
-							}.bind(this));
-						}
+
+				/**
+				 * Events
+				 */
+				events: {
+					type: Array,
+					observer: 'eventsChanged'
+				}
+			},
+
+			eventsChanged: function() {
+				var app = document.getElementById(this.appId);
+				
+				if(app) {
+					if(this.events && this.events.length > 0) {
+						var signal = this.$.signal;
+						this.events.forEach(function(event) {
+							signal.addEventListener('iron-signal-' + event.name, app[event.function].bind(app));
+						}.bind(this));
 					}
 				}
-			});
-		})();
+			}
+		});
 	</script>
 </dom-module>
