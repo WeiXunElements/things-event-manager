@@ -1,13 +1,13 @@
-<link ref="import" href="../../bower_components/polymer/polymer.html">
+<link ref="import" href="../polymer/polymer.html">
 
-<link rel="import" href="../../bower_components/iron-signals/iron-signals.html">
+<link rel="import" href="../iron-signals/iron-signals.html">
 
 <!--
 모든 글로벌 이벤트를 한곳에서 관리하고 app에서 관리하기 위한 컴포넌트
 
 Example:
 
-    <things-event-manager 
+    <things-event-manager
     	app-id = "app"
       events = '[{"name": "success","function":"showToastInfo"},
                 {"name": "failure","function" : "showToastConfirm"}]'>
@@ -30,6 +30,8 @@ Example:
 			properties: {
 				/**
 				 * Application
+				 * ******
+				 * @type {Objetc}
 				 */
 				appId: {
 					type: Object,
@@ -38,22 +40,34 @@ Example:
 
 				/**
 				 * Events
+				 * *****
+				 * @type {Array}
 				 */
 				events: {
 					type: Array,
 					observer: 'eventsChanged'
 				}
 			},
+			/**
+			 * *****
+			 * attached
+			 * ******
+			 */
 			attached: function(){
 				this.eventsChanged();
 			},
+			/**
+			 * *****
+			 * eventsChanged
+			 * ******
+			 */
 			eventsChanged: function() {
 				var app = document.getElementById(this.appId);
 				if(app) {
 					if(this.events && this.events.length > 0) {
 						var signal = this.$.signal;
 						this.events.forEach(function(event) {
-							
+
 							signal.addEventListener('iron-signal-' + event.name, app[event.function].bind(app));
 						}.bind(this));
 					}
