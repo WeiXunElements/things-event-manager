@@ -1,5 +1,5 @@
 # things-event-manager
-The component that manages all global events in one place and in an app.
+이는 모든 글로벌 이벤트들을 한 곳에서 관리하고 app에서 관리하기 위한 컴포넌트이다.
 
 Example:
 
