@@ -71,7 +71,7 @@ Example:
 					if(this.events && this.events.length > 0) {
 						var signal = this.$.signal;
 						this.events.forEach(function(event) {
-
+							signal.removeEventListener('iron-signal-' + event.name, app[event.function].bind(app));
 							signal.addEventListener('iron-signal-' + event.name, app[event.function].bind(app));
 						}.bind(this));
 					}
