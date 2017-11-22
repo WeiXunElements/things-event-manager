@@ -67,15 +67,56 @@ Example:
 			 */
 			eventsChanged: function() {
 				var app = document.getElementById(this.appId);
+				var self = this;
 				if(app) {
 					if(this.events && this.events.length > 0) {
 						var signal = this.$.signal;
+
+						this.getRegisteredEeventListners().forEach(function(listner){
+							signal.removeEventListener('iron-signal-' + listner.name, listner.function);
+						});
+
+						self.resetEeventListners();
+
 						this.events.forEach(function(event) {
-							signal.removeEventListener('iron-signal-' + event.name, app[event.function].bind(app));
-							signal.addEventListener('iron-signal-' + event.name, app[event.function].bind(app));
-						}.bind(this));
+							var listner = app[event.function].bind(app);
+							signal.addEventListener('iron-signal-' + event.name, listner);
+							self.registerEventFunctions(event.name,listner);
+						});
 					}
 				}
+			},
+			/**
+			 * *****
+			 * make event listner funcitons
+			 * *****
+			 */
+			registerEventFunctions: function(eventName,listner){
+				if(!this.registeredEeventListners){
+					this.registeredEeventListners = [];
+				}
+				var listnerObj = {'name' : eventName, 'function':listner};
+				this.registeredEeventListners.push(listnerObj);
+			},
+			/**
+			 * *****
+			 * return registered Events
+			 * *****
+			 */
+			getRegisteredEeventListners: function(){
+				if(this.registeredEeventListners&&this.registeredEeventListners.length>0){
+					return this.registeredEeventListners
+				}else{
+					return [];
+				}
+			},
+			/**
+			 * *****
+			 * return registered Events
+			 * *****
+			 */
+			resetEeventListners: function(){
+				this.set('registeredEeventListners',[]);
 			}
 		});
 	</script>
