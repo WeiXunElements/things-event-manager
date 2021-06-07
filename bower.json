@@ -1,8 +1,8 @@
 {
   "name": "things-event-manager",
-  "version": "v2.2.2",
+  "version": "v2.2.3",
   "authors": [
-    "Hatio Lab. <heartyoh@hatiolab.com>"
+    "Shenzhen Weixun"
   ],
   "description": "component for manage all global event in one elements.",
   "keywords": [
@@ -11,8 +11,6 @@
     "seed"
   ],
   "main": "things-event-manager.html",
-  "license": "http://license.hatiolab.com/EULA",
-  "homepage": "http://elements.hatiolab.com/",
   "ignore": [
     "/.*",
     "/test/"

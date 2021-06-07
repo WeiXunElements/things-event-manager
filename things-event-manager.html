@@ -1,10 +1,10 @@
 <!--
 @license
-Copyright © HatioLab Inc. All rights reserved.
+Copyright © 2015-2021 Shenzhen Weixun All rights reserved.
 -->
-<link ref="import" href="../polymer/polymer.html">
+<link ref="import" href="../polymer/polymer.html" />
 
-<link rel="import" href="../iron-signals/iron-signals.html">
+<link rel="import" href="../iron-signals/iron-signals.html" />
 
 <!--
 모든 글로벌 이벤트를 한곳에서 관리하고 app에서 관리하기 위한 컴포넌트
@@ -21,103 +21,103 @@ Example:
 -->
 
 <dom-module id="things-event-manager">
-	<template>
-		<iron-signals id='signal'></iron-signals>
-	</template>
+  <template>
+    <iron-signals id="signal"></iron-signals>
+  </template>
 
-	<script>
-		'use strict';
+  <script>
+    'use strict';
 
-		Polymer({
-			is: 'things-event-manager',
+    Polymer({
+      is: 'things-event-manager',
 
-			properties: {
-				/**
-				 * Application
-				 * ******
-				 * @type {Objetc}
-				 */
-				appId: {
-					type: Object,
-					value: 'app'
-				},
+      properties: {
+        /**
+         * Application
+         * ******
+         * @type {Objetc}
+         */
+        appId: {
+          type: Object,
+          value: 'app',
+        },
 
-				/**
-				 * Events
-				 * *****
-				 * @type {Array}
-				 */
-				events: {
-					type: Array,
-					observer: 'eventsChanged'
-				}
-			},
-			/**
-			 * *****
-			 * attached
-			 * ******
-			 */
-			attached: function(){
-				this.eventsChanged();
-			},
-			/**
-			 * *****
-			 * eventsChanged
-			 * ******
-			 */
-			eventsChanged: function() {
-				var app = document.getElementById(this.appId);
-				var self = this;
-				if(app) {
-					if(this.events && this.events.length > 0) {
-						var signal = this.$.signal;
+        /**
+         * Events
+         * *****
+         * @type {Array}
+         */
+        events: {
+          type: Array,
+          observer: 'eventsChanged',
+        },
+      },
+      /**
+       * *****
+       * attached
+       * ******
+       */
+      attached: function () {
+        this.eventsChanged();
+      },
+      /**
+       * *****
+       * eventsChanged
+       * ******
+       */
+      eventsChanged: function () {
+        var app = document.getElementById(this.appId);
+        var self = this;
+        if (app) {
+          if (this.events && this.events.length > 0) {
+            var signal = this.$.signal;
 
-						this.getRegisteredEeventListners().forEach(function(listner){
-							signal.removeEventListener('iron-signal-' + listner.name, listner.function);
-						});
+            this.getRegisteredEeventListners().forEach(function (listner) {
+              signal.removeEventListener('iron-signal-' + listner.name, listner.function);
+            });
 
-						self.resetEeventListners();
+            self.resetEeventListners();
 
-						this.events.forEach(function(event) {
-							var listner = app[event.function].bind(app);
-							signal.addEventListener('iron-signal-' + event.name, listner);
-							self.registerEventFunctions(event.name,listner);
-						});
-					}
-				}
-			},
-			/**
-			 * *****
-			 * make event listner funcitons
-			 * *****
-			 */
-			registerEventFunctions: function(eventName,listner){
-				if(!this.registeredEeventListners){
-					this.registeredEeventListners = [];
-				}
-				var listnerObj = {'name' : eventName, 'function':listner};
-				this.registeredEeventListners.push(listnerObj);
-			},
-			/**
-			 * *****
-			 * return registered Events
-			 * *****
-			 */
-			getRegisteredEeventListners: function(){
-				if(this.registeredEeventListners&&this.registeredEeventListners.length>0){
-					return this.registeredEeventListners
-				}else{
-					return [];
-				}
-			},
-			/**
-			 * *****
-			 * reset registered Events
-			 * *****
-			 */
-			resetEeventListners: function(){
-				this.set('registeredEeventListners',[]);
-			}
-		});
-	</script>
+            this.events.forEach(function (event) {
+              var listner = app[event.function].bind(app);
+              signal.addEventListener('iron-signal-' + event.name, listner);
+              self.registerEventFunctions(event.name, listner);
+            });
+          }
+        }
+      },
+      /**
+       * *****
+       * make event listner funcitons
+       * *****
+       */
+      registerEventFunctions: function (eventName, listner) {
+        if (!this.registeredEeventListners) {
+          this.registeredEeventListners = [];
+        }
+        var listnerObj = { name: eventName, function: listner };
+        this.registeredEeventListners.push(listnerObj);
+      },
+      /**
+       * *****
+       * return registered Events
+       * *****
+       */
+      getRegisteredEeventListners: function () {
+        if (this.registeredEeventListners && this.registeredEeventListners.length > 0) {
+          return this.registeredEeventListners;
+        } else {
+          return [];
+        }
+      },
+      /**
+       * *****
+       * reset registered Events
+       * *****
+       */
+      resetEeventListners: function () {
+        this.set('registeredEeventListners', []);
+      },
+    });
+  </script>
 </dom-module>
